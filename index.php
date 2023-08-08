@@ -34,7 +34,8 @@ $date = $conn->query("select * from tasks");
                     <th>#</th>
                     <th>Task Name</th>
                     <th>Date</th>
-                    <th>Action</th>
+                    <th>Delete</th>
+                    <th>Update</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,6 +45,7 @@ $date = $conn->query("select * from tasks");
                         <td><?php echo $rows->name; ?></td>
                         <td><?php echo $rows->created_at; ?></td>
                         <td><a href="delete.php?del_id=<?php echo $rows->id; ?>" class="btn btn-danger">Delete</a></td>
+                        <td><a href="update.php?upd_id=<?php echo $rows->id; ?>" class="btn btn-warning">Update</a></td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
