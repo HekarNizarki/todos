@@ -18,6 +18,8 @@ if (isset($_GET['upd_id'])) {
     }
 }
 ?>
+
+<?php include 'header.php'; ?>
 <form method="POST" action="update.php?upd_id=<?php echo $id; ?>" class="form-inline" id="user_form">
 
     <div class="form-group mx-sm-3 mb-2">
@@ -27,3 +29,5 @@ if (isset($_GET['upd_id'])) {
     <input type="hidden" name="action" id="action" />
     <input type="submit" name="submit" id="button_action" class="btn btn-default" value="Update" />
 </form>
+
+<?php include "footer.php"; ?>
