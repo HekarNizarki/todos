@@ -6,8 +6,13 @@ if (isset($_POST['button_action'])) {
 
     $insert = $conn->prepare("Insert into tasks (name) values (:name)");
 
-    $insert->execute([':name' => $task]);
-
+    if ($task > 0) {
+        $insert->execute([':name' => $task]);
+    } else {
+        echo '<script type="text/javascript">';
+        echo ' alert("no data")';  //not showing an alert box.
+        echo '</script>';
+    }
     header("location: index.php");
 } else {
 }
