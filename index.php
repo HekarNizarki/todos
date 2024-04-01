@@ -1,43 +1,58 @@
 <?php
-require 'connect.php';
-
-$date = $conn->query("select * from tasks");
+include "connect.php";
 ?>
 
-<?php include 'header.php'; ?>
-<div class="container">
-    <form method="POST" action="insert.php" class="form-inline" id="user_form">
+<!DOCTYPE html>
+<html>
 
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="inputPassword2" class="sr-only">create</label>
-            <input name="mytask" type="text" class="form-control" id="task" placeholder="enter task">
-        </div>
-        <input type="hidden" name="action" id="action" />
-        <input type="submit" name="button_action" id="button_action" class="btn btn-default" value="Insert" />
+<head>
+    <title>SQL Query Executor</title>
+</head>
+
+<body>
+    <h2>SQL Query Executor</h2>
+
+    <form method="post">
+        <label for="sqlQuery">Enter your SQL query:</label><br>
+        <textarea id="sqlQuery" name="sqlQuery" rows="5" cols="50"></textarea><br><br>
+        <input type="submit" value="Execute">
     </form>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Task Name</th>
-                <th>Date</th>
-                <th>Delete</th>
-                <th>Update</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($rows = $date->fetch(PDO::FETCH_OBJ)) : ?>
-                <tr>
-                    <td><?php echo $rows->id; ?></td>
-                    <td><?php echo $rows->name; ?></td>
-                    <td><?php echo $rows->created_at; ?></td>
-                    <td><a href="delete.php?del_id=<?php echo $rows->id; ?>" class="btn btn-danger">Delete</a></td>
-                    <td><a href="update.php?upd_id=<?php echo $rows->id; ?>" class="btn btn-warning">Update</a></td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-</div>
+    <?php
+    // Check if form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-<?php include "footer.php"; ?>
+        // Prepare SQL statement
+        $sql = $_POST['sqlQuery'];
+        $stmt = $conn->prepare($sql);
+        // Execute SQL statement
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        // Display results in a table
+        echo "<h3>Data from the table:</h3>";
+        echo "<table border='1'>";
+        echo "<tr>";
+        // Output table headers
+        foreach ($result[0] as $key => $value) {
+            echo "<th>$key</th>";
+        }
+        echo "</tr>";
+        // Output table data
+        foreach ($result as $row) {
+            echo "<tr>";
+            foreach ($row as $key => $value) {
+                echo "<td>$value</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
+    // Close connection
+    $conn = null;
+    ?>
+</body>
+
+</html>

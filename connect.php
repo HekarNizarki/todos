@@ -1,7 +1,7 @@
 <?php
 try {
     $host = "localhost";
-    $dbname = "todos";
+    $dbname = "car";
     $user = "root";
     $pass = "";
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
