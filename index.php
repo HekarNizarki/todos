@@ -47,6 +47,9 @@ include "connect.php";
     // Close connection
     $conn = null;
     ?>
+
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
 
 </html>
