@@ -2,7 +2,7 @@
 include "connect.php";
 ?>
 <?php
-$sql = 'select year(timee) ,sum(number) from accidents group by year(timee) order by year(timee);';
+$sql = 'select year(timee) ,COUNT(ID) from accidents group by year(timee) order by year(timee);';
 $stmt = $conn->prepare($sql);
 // Execute SQL statement
 $stmt->execute();
@@ -15,7 +15,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Output table data
 foreach ($result as $row) {
     $year = array_merge($year, array($row['year(timee)']));
-    $num = array_merge($num, array($row['sum(number)']));
+    $num = array_merge($num, array($row['COUNT(ID)']));
 }
 
 $conn = null;
@@ -30,8 +30,8 @@ $conn = null;
 </head>
 
 
-<body class="bg-light text-dark m-3">
-    <h2 class="text-center">Car Accident visual Analytic System </h2>
+<body class="bg-light text-dark m-4">
+    <h2 class="text-center mb-5">Car Accident visual Analytic System </h2>
     <div class="row">
         <div class="col w-50">
             <div class="row">
@@ -48,7 +48,7 @@ $conn = null;
     </div>
 
 
-
+    <!-- line Chart -->
     <script>
         const YEAR = <?php echo json_encode($year); ?>;
         const NUM = <?php echo json_encode($num); ?>;
