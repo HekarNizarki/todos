@@ -1,25 +1,6 @@
 <?php
 include "connect.php";
 ?>
-<?php
-$sql1 = 'select year(timee) ,COUNT(ID) from accidents group by year(timee) order by year(timee);';
-$stmt = $conn->prepare($sql1);
-// Execute SQL statement
-$stmt->execute();
-$year = array();
-
-$num = array();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// Display results in a table
-
-// Output table data
-foreach ($result as $row) {
-    $year = array_merge($year, array($row['year(timee)']));
-    $num = array_merge($num, array($row['COUNT(ID)']));
-}
-
-// $conn = null;
-?>
 <!DOCTYPE html>
 <html>
 
@@ -29,101 +10,33 @@ foreach ($result as $row) {
 
 </head>
 
-
 <body class="bg-light text-dark m-4">
     <h2 class="text-center mb-5">Car Accident visual Analytic System </h2>
     <div class="row">
         <div class="col w-50">
             <div class="row">
+                <h5 class="text-dark text-center ">Number If Accidents from (2016 to 2020)</h5>
                 <div>
-                    <canvas id="myChart1"></canvas>
+                    <canvas id="myChart1" class="mb-5"></canvas>
                 </div>
+
+                <h5 class="text-dark text-center ">Impact of Weather Conditions on Accidents</h5>
+
                 <div>
-                    <canvas id="myChart2"></canvas>
+                    <canvas id="myChart2" class="mb-5 p-0 m-0"></canvas>
                 </div>
+
             </div>
         </div>
-        <div class="col w-50">
+        <div class="col w-50 ">
         </div>
     </div>
-
-
-    <!-- line Chart -->
-    <script>
-        const YEAR = <?php echo json_encode($year); ?>;
-        const NUM = <?php echo json_encode($num); ?>;
-        //setup
-        const data = {
-            labels: YEAR,
-            datasets: [{
-                label: 'Number If Accidents from (2016 to 2020)',
-                data: NUM,
-                borderWidth: 3,
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.2,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-
-                ],
-
-            }, ]
-
-        };
-        //config 
-        const config = {
-            type: 'line',
-            data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        };
-        //render
-        const myChart1 = new Chart(
-            document.getElementById('myChart1'),
-            config);
-    </script>
-
     <?php
-    $sql1 = "SELECT * FROM `weather`";
-    $stmt = $conn->prepare($sql1);
-    // Execute SQL statement
-    $stmt->execute();
+    // chart 01 : bar chart
+    include "chart1.php";
 
-    $weather[] = array();
-    $num = array();
-    $temp = array();
-    $wind_chill = array();
-    $humidity = array();
-    $visibility = array();
-    $wind_speed = array();
-
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // Display results in a table
-
-    // Output table data
-    foreach ($result as $row) {
-
-        $weather = array_merge($weather, array($row['lastname']));
-        $num = array_merge($num, array($row['COUNT(id)']));
-        $temp = array_merge($temp, array($row['AVG(temperature)']));
-        $wind_chill = array_merge($wind_chill, array($row['AVG(wind_chill)']));
-        $humidity = array_merge($humidity, array($row['AVG(humidity)']));
-        $visibility = array_merge($visibility, array($row['AVG(visibility)']));
-        $wind_speed = array_merge($wind_speed, array($row['AVG(wind_speed)']));
-    }
-
-    echo json_encode($weather);
-    echo json_encode($num);
-    echo json_encode($temp);
-    echo json_encode($wind_chill);
-    echo json_encode($humidity);
-    echo json_encode($visibility);
-
+    // chart 02 :line chart
+    include "chart2.php";
 
     $conn = null;
     ?>
