@@ -2,8 +2,8 @@
 include "connect.php";
 ?>
 <?php
-$sql = 'select year(timee) ,COUNT(ID) from accidents group by year(timee) order by year(timee);';
-$stmt = $conn->prepare($sql);
+$sql1 = 'select year(timee) ,COUNT(ID) from accidents group by year(timee) order by year(timee);';
+$stmt = $conn->prepare($sql1);
 // Execute SQL statement
 $stmt->execute();
 $year = array();
@@ -18,7 +18,7 @@ foreach ($result as $row) {
     $num = array_merge($num, array($row['COUNT(ID)']));
 }
 
-$conn = null;
+// $conn = null;
 ?>
 <!DOCTYPE html>
 <html>
@@ -88,6 +88,45 @@ $conn = null;
             config);
     </script>
 
+    <?php
+    $sql1 = "SELECT * FROM `weather`";
+    $stmt = $conn->prepare($sql1);
+    // Execute SQL statement
+    $stmt->execute();
+
+    $weather[] = array();
+    $num = array();
+    $temp = array();
+    $wind_chill = array();
+    $humidity = array();
+    $visibility = array();
+    $wind_speed = array();
+
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Display results in a table
+
+    // Output table data
+    foreach ($result as $row) {
+
+        $weather = array_merge($weather, array($row['lastname']));
+        $num = array_merge($num, array($row['COUNT(id)']));
+        $temp = array_merge($temp, array($row['AVG(temperature)']));
+        $wind_chill = array_merge($wind_chill, array($row['AVG(wind_chill)']));
+        $humidity = array_merge($humidity, array($row['AVG(humidity)']));
+        $visibility = array_merge($visibility, array($row['AVG(visibility)']));
+        $wind_speed = array_merge($wind_speed, array($row['AVG(wind_speed)']));
+    }
+
+    echo json_encode($weather);
+    echo json_encode($num);
+    echo json_encode($temp);
+    echo json_encode($wind_chill);
+    echo json_encode($humidity);
+    echo json_encode($visibility);
+
+
+    $conn = null;
+    ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
 
 
