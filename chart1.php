@@ -4,6 +4,7 @@ include "connect.php";
 
 <?php
 $sql1 = 'select year(timee) ,COUNT(ID) from accidents group by year(timee) order by year(timee);';
+
 $stmt = $conn->prepare($sql1);
 // Execute SQL statement
 $stmt->execute();
@@ -35,7 +36,7 @@ foreach ($result as $row) {
         const data = {
             labels: YEAR,
             datasets: [{
-                label: 'Number If Accidents from (2016 to 2020)',
+                label: 'Number of Accidents from (2016 to 2020)',
                 data: NUM,
                 borderWidth: 2,
                 borderColor: 'rgb(75, 192, 192)',
