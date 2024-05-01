@@ -3,7 +3,7 @@ include "connect.php";
 ?>
 
 <?php
-$sql1 = 'select year(timee) ,COUNT(ID) from accidents group by year(timee) order by year(timee);';
+$sql1 = 'SELECT * FROM `year`;';
 
 $stmt = $conn->prepare($sql1);
 // Execute SQL statement
@@ -14,7 +14,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // convert sql result to array
 foreach ($result as $row) {
-    $year = array_merge($year, array($row['year(timee)']));
+    $year = array_merge($year, array($row['extracted_year']));
     $num = array_merge($num, array($row['COUNT(ID)']));
 }
 

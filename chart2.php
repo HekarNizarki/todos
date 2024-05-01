@@ -16,21 +16,22 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($result as $row) {
 
     $weather = array_merge($weather, array($row['weather']));
-    $num = array_merge($num, array($row['COUNT(id)']));
+    $num = array_merge($num, array($row['COUNT(ID)']));
     $visibility = array_merge($visibility, array($row['AVG(visibility)']));
     $wind_speed = array_merge($wind_speed, array($row['AVG(wind_speed)']));
 }
-
 ?>
 <script>
     const weather = <?php echo json_encode($weather); ?>;
+    const filweather = weather.flat(); //remove empty value
     const num = <?php echo json_encode($num); ?>;
     const visibility = <?php echo json_encode($visibility); ?>;
     const wind_speed = <?php echo json_encode($wind_speed); ?>;
 
     //setup
     const data1 = {
-        labels: weather,
+        labels: filweather,
+        // labels: ['Fair', 'Mostly Cloudy', 'Cloudy', 'Partly Cloudy', 'Clear', 'Overcast', 'Light Rain', 'Light Snow', 'Fog', 'Scattered Clouds'],
         datasets: [{
                 label: 'Number of Accidents',
                 data: num,
