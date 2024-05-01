@@ -15,15 +15,19 @@ include "connect.php";
     <div class="row">
         <div class="col w-50">
             <div class="row">
-                <h5 class="text-dark text-center ">Number of Car Accidents from (2016 to 2020)</h5>
+                <h5 class="text-dark text-center "></h5>
                 <div>
                     <canvas id="myChart1" class="mb-5"></canvas>
                 </div>
 
-                <h5 class="text-dark text-center ">Impact of Weather Conditions on Accidents</h5>
+                <h5 class="text-dark text-center "></h5>
 
                 <div>
                     <canvas id="myChart2" class="mb-5 p-0 m-0"></canvas>
+                </div>
+
+                <div>
+                    <canvas id="myChart3" class="mb-5 p-0 m-0"></canvas>
                 </div>
 
             </div>
@@ -37,6 +41,9 @@ include "connect.php";
 
     // chart 02 :line chart
     include "chart2.php";
+
+    // chart 03 :Radar chart
+    include "chart3.php";
 
     $conn = null;
     ?>

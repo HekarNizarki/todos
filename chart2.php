@@ -1,5 +1,5 @@
 <?php
-$sql1 = "SELECT * FROM `weather`";
+$sql1 = "SELECT * FROM `newweather`";
 $stmt = $conn->prepare($sql1);
 // Execute SQL statement
 $stmt->execute();
@@ -29,7 +29,7 @@ foreach ($result as $row) {
     const wind_speed = <?php echo json_encode($wind_speed); ?>;
 
     //setup
-    const data1 = {
+    const data2 = {
         labels: filweather,
         // labels: ['Fair', 'Mostly Cloudy', 'Cloudy', 'Partly Cloudy', 'Clear', 'Overcast', 'Light Rain', 'Light Snow', 'Fog', 'Scattered Clouds'],
         datasets: [{
@@ -69,8 +69,14 @@ foreach ($result as $row) {
     //config 
     const config2 = {
         type: 'line',
-        data: data1,
+        data: data2,
         options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Impact of Weather Conditions on Accidents'
+                },
+            },
             scales: {
                 y: {
                     beginAtZero: true

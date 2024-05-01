@@ -3,19 +3,23 @@ include "connect.php";
 ?>
 
 <?php
-$sql1 = 'SELECT * FROM `year`;';
+$sql1 = 'SELECT * FROM `accsever`;';
 
 $stmt = $conn->prepare($sql1);
 // Execute SQL statement
 $stmt->execute();
-$year = array();
-$num = array();
+$severity1 = array();
+$num1 = array();
+$temperature1 = array();
+$wind_chill1 = array();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // convert sql result to array
 foreach ($result as $row) {
-    $year = array_merge($year, array($row['extracted_year']));
-    $num = array_merge($num, array($row['COUNT(ID)']));
+    $severity1 = array_merge($severity1, array($row['severity']));
+    $num1 = array_merge($num1, array($row['COUNT(ID)']));
+    $temperature1 = array_merge($temperature1, array($row['AVG(temperature)']));
+    $wind_chill1 = array_merge($wind_chill1, array($row['AVG(wind_chill)']));
 }
 
 ?>
@@ -30,32 +34,81 @@ foreach ($result as $row) {
 <body>
     <!-- line Chart -->
     <script>
-        const YEAR = <?php echo json_encode($year); ?>;
-        const NUM = <?php echo json_encode($num); ?>;
+        const sev1 = <?php echo json_encode($severity1); ?>;
+        const num1 = <?php echo json_encode($num1); ?>;
+        const temp1 = <?php echo json_encode($temperature1); ?>;
+        const wind1 = <?php echo json_encode($wind_chill1); ?>;
+
         //setup
         const data = {
-            labels: YEAR,
+            labels: sev1,
             datasets: [{
-                label: 'Number of Accidents from (2016 to 2020)',
-                data: NUM,
-                borderWidth: 2,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.5,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.3)',
+                    label: 'Number of accident',
+                    data: num1,
+                    borderWidth: 2,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.5,
+                    backgroundColor: [
+                        'rgba(255, 200, 132, 0.7)',
+                    ],
+                    type: 'bar',
+                    stack: 'Stack 0',
+                    yAxisID: 'y2',
+
+                }, {
+                    label: 'AVG wind chill',
+                    data: wind1,
+                    borderWidth: 2,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.5,
+                    backgroundColor: [
+                        'rgba(255, 99, 50, 0.7)',
+                    ],
+                    type: 'bar',
+                    stack: 'Stack 1',
+                    yAxisID: 'y',
+
+                },
+                {
+                    label: 'AVG temperature',
+                    data: temp1,
+                    borderWidth: 2,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.5,
+                    backgroundColor: [
+                        'rgba(200, 20, 50, 0.7)',
+                    ],
+                    type: 'bar',
+                    stack: 'Stack 2',
+                    yAxisID: 'y1',
+
+                },
 
 
-                ],
-            }, ]
+            ]
         };
         //config 
         const config = {
             type: 'bar',
             data: data,
             options: {
+
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Weather Impact on Severity of Accidents'
+                    },
+                },
+                responsive: true,
+                interaction: {
+                    intersect: false,
+                },
                 scales: {
+                    x: {
+                        stacked: true,
+                    },
                     y: {
-                        beginAtZero: true
+                        stacked: true
                     }
                 }
             }
