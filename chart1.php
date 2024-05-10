@@ -53,7 +53,7 @@ foreach ($result as $row) {
                     ],
                     type: 'bar',
                     stack: 'Stack 0',
-                    yAxisID: 'y2',
+                    yAxisID: 'y',
 
                 }, {
                     label: 'AVG wind chill',
@@ -66,7 +66,7 @@ foreach ($result as $row) {
                     ],
                     type: 'bar',
                     stack: 'Stack 1',
-                    yAxisID: 'y',
+                    yAxisID: 'y2',
 
                 },
                 {
@@ -80,7 +80,7 @@ foreach ($result as $row) {
                     ],
                     type: 'bar',
                     stack: 'Stack 2',
-                    yAxisID: 'y1',
+                    yAxisID: 'y2',
 
                 },
 

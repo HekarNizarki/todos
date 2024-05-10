@@ -61,7 +61,7 @@ foreach ($result as $row) {
                 fill: false,
                 borderColor: 'rgba(75, 150, 192, 0.7)',
                 tension: 0.2,
-                yAxisID: 'y2',
+                yAxisID: 'y1',
             }
         ]
     };
