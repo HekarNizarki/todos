@@ -79,7 +79,19 @@ foreach ($result as $row) {
             },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of accident'
+                    },
+
+                },
+                y1: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Wind Speed & Visibility'
+                    }
                 }
             }
         }

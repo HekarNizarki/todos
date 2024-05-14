@@ -106,9 +106,24 @@ foreach ($result as $row) {
                 scales: {
                     x: {
                         stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Severity'
+                        },
                     },
                     y: {
-                        stacked: true
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Number of accident'
+                        },
+                    },
+                    y2: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'AVG temperature and wind chill'
+                        },
                     }
                 }
             }
