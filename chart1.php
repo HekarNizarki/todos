@@ -3,23 +3,25 @@ include "connect.php";
 ?>
 
 <?php
-$sql1 = 'SELECT * FROM `accsever`;';
+$sql1 = 'SELECT * FROM `sevoverdayname`;';
 
 $stmt = $conn->prepare($sql1);
 // Execute SQL statement
 $stmt->execute();
+$dayname = array();
 $severity1 = array();
-$num1 = array();
-$temperature1 = array();
-$wind_chill1 = array();
+$severity2 = array();
+$severity3 = array();
+$severity4 = array();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // convert sql result to array
 foreach ($result as $row) {
-    $severity1 = array_merge($severity1, array($row['severity']));
-    $num1 = array_merge($num1, array($row['COUNT(ID)']));
-    $temperature1 = array_merge($temperature1, array($row['AVG(temperature)']));
-    $wind_chill1 = array_merge($wind_chill1, array($row['AVG(wind_chill)']));
+    $dayname = array_merge($dayname, array($row['DAYNAME(timee)']));
+    $severity1 = array_merge($severity1, array($row['SEV1']));
+    $severity2 = array_merge($severity2, array($row['SEV2']));
+    $severity3 = array_merge($severity3, array($row['SEV3']));
+    $severity4 = array_merge($severity4, array($row['SEV4']));
 }
 
 ?>
@@ -34,69 +36,85 @@ foreach ($result as $row) {
 <body>
     <!-- line Chart -->
     <script>
+        const dname = <?php echo json_encode($dayname); ?>;
+        const newdname = dname.flat();
         const sev1 = <?php echo json_encode($severity1); ?>;
-        const num1 = <?php echo json_encode($num1); ?>;
-        const temp1 = <?php echo json_encode($temperature1); ?>;
-        const wind1 = <?php echo json_encode($wind_chill1); ?>;
+        const sev2 = <?php echo json_encode($severity2); ?>;
+        const sev3 = <?php echo json_encode($severity3); ?>;
+        const sev4 = <?php echo json_encode($severity4); ?>;
+
 
         //setup
         const data = {
-            labels: sev1,
+            labels: newdname,
             datasets: [{
-                    label: 'Number of accident',
-                    data: num1,
+                    label: 'Severity 1',
+                    data: sev1,
                     borderWidth: 2,
-                    borderColor: 'rgb(75, 192, 192)',
+                    borderColor: 'rgba(30, 150, 60, 0.9)',
                     tension: 0.5,
                     backgroundColor: [
-                        'rgba(255, 200, 132, 0.7)',
+                        'rgba(30, 150, 60, 0.7)',
                     ],
                     type: 'bar',
                     stack: 'Stack 0',
-                    yAxisID: 'y',
+
 
                 }, {
-                    label: 'AVG wind chill',
-                    data: wind1,
+                    label: 'Severity 2',
+                    data: sev2,
                     borderWidth: 2,
-                    borderColor: 'rgb(75, 192, 192)',
+                    borderColor: 'rgba(220, 200, 0, 0.9)',
+                    tension: 0.5,
+                    backgroundColor: [
+                        'rgba(240, 240, 0, 0.7)',
+                    ],
+                    type: 'bar',
+                    stack: 'Stack 1',
+
+
+                },
+                {
+                    label: 'Severity 3',
+                    data: sev3,
+                    borderWidth: 2,
+                    borderColor: 'rgba(255, 99, 50, 0.7)',
                     tension: 0.5,
                     backgroundColor: [
                         'rgba(255, 99, 50, 0.7)',
                     ],
                     type: 'bar',
-                    stack: 'Stack 1',
-                    yAxisID: 'y2',
+                    stack: 'Stack 2',
 
-                },
-                {
-                    label: 'AVG temperature',
-                    data: temp1,
+
+                }, {
+                    label: 'Severity 4',
+                    data: sev4,
                     borderWidth: 2,
-                    borderColor: 'rgb(75, 192, 192)',
+                    borderColor: 'rgba(200, 20, 20, 0.7)',
                     tension: 0.5,
                     backgroundColor: [
-                        'rgba(200, 20, 50, 0.7)',
+                        'rgba(200, 20, 20, 0.7)',
                     ],
                     type: 'bar',
-                    stack: 'Stack 2',
-                    yAxisID: 'y2',
+                    stack: 'Stack 3',
 
-                },
+
+                }
 
 
             ]
         };
         //config 
         const config = {
-            type: 'bar',
+            type: 'line',
             data: data,
             options: {
 
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Weather Impact on Severity of Accidents'
+                        text: 'Severity in  Weekday '
                     },
                 },
                 responsive: true,
@@ -108,23 +126,17 @@ foreach ($result as $row) {
                         stacked: true,
                         title: {
                             display: true,
-                            text: 'Severity'
+                            text: 'Weekday'
                         },
                     },
                     y: {
                         stacked: true,
                         title: {
                             display: true,
-                            text: 'Number of accident'
+                            text: 'Severity'
                         },
                     },
-                    y2: {
-                        stacked: true,
-                        title: {
-                            display: true,
-                            text: 'AVG temperature and wind chill'
-                        },
-                    }
+
                 }
             }
         };
