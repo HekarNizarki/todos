@@ -47,13 +47,9 @@
 
     function getColor(d) {
         return d > 40000 ? '#800026' :
-            d > 30000 ? '#BD0026' :
-            d > 25000 ? '#E31A1C' :
-            d > 20000 ? '#E31A1C' :
-            d > 15000 ? '#FC4E2A' :
-            d > 10000 ? '#BD0026' :
-            d > 5000 ? '#E31A1C' :
-            d > 2500 ? '#FC4E2A' :
+            d > 20000 ? '#BD0026' :
+            d > 10000 ? '#E31A1C' :
+            d > 5000 ? '#FC4E2A' :
             d > 1000 ? '#FD8D3C' :
             d > 500 ? '#FEB24C' :
             d > 100 ? '#FED976' :
@@ -136,7 +132,7 @@
     legend.onAdd = function(map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, 100, 500, 1000, 2500, 5000, 10000, 15000, 20000, 25000, 30000, 40000],
+            grades = [0, 100, 500, 1000, 5000, 10000, 20000, 40000],
             labels = [];
 
         // loop through our density intervals and generate a label with a colored square for each interval
