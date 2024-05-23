@@ -5,12 +5,14 @@ include "connect.php";
 <html>
 
 <head>
+    <link rel="stylesheet" href="style.css">
     <title>Car Accident visual Analytic System</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="./us.js"></script>
 
-    <link rel="stylesheet" href="style.css">
+
 
 </head>
 
@@ -39,22 +41,9 @@ include "connect.php";
         <div class="col w-50 ">
 
             <!-- map -->
-            <div id="map" class="p-5"></div>
-            <script>
-                var map = L.map('map').setView([51.5, -0.09], 1);
-                L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=T8HqAMgrrkJfTxTB6c25', {
-                    // attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
-                    minZoom: 8,
-                    maxZoom: 17
-                }, ).addTo(map);
-
-                const array1 = [51.4, 51.3, 51.495, 51.5];
-                const array2 = [-0.09, -0.010, -0.083, -0.05];
-                for (i = 0; i < array1.length; i++) {
-                    var marker = L.marker([array1[i], array2[i]]).addTo(map);
-                }
-            </script>
-
+            <?php
+            include "map.php";
+            ?>
         </div>
     </div>
     <?php
