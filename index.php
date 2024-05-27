@@ -17,28 +17,28 @@ include "connect.php";
 </head>
 
 <body class="bg-light text-dark m-4">
-    <h2 class="text-center mb-5">Car Accident visual Analytic System </h2>
+    <h2 class="text-center mb-1">Car Accident visual Analytic System </h2>
     <div class="row">
-        <div class="col w-50">
+        <div class="col-5">
             <div class="row">
                 <h5 class="text-dark text-center "></h5>
                 <div>
-                    <canvas id="myChart1" class="mb-5"></canvas>
+                    <canvas id="myChart1"></canvas>
                 </div>
 
-                <h5 class="text-dark text-center "></h5>
+                <h5 class="text-dark text-center"></h5>
 
                 <div>
-                    <canvas id="myChart2" class="mb-5 p-0 m-0"></canvas>
+                    <canvas id="myChart2"></canvas>
                 </div>
 
                 <div>
-                    <canvas id="myChart3" class="mb-5 p-0 m-0"></canvas>
+                    <canvas id="myChart3" class="p-4"></canvas>
                 </div>
 
             </div>
         </div>
-        <div class="col w-50 ">
+        <div class="col-7 mt-5">
 
             <!-- map -->
             <?php

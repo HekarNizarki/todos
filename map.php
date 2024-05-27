@@ -1,7 +1,7 @@
 <head>
     <style>
         #map {
-            height: 800px;
+            height: 900px;
             width: 100%;
             margin-bottom: 220;
             padding: 0;
